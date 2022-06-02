@@ -1,0 +1,157 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sample.tex
+% 情報処理学会全国大会論文 サンプルファイル
+%
+%  Susumu ISHIHARA Jan 2000
+%  ishihara@cs.inf.shizuoka.ac.jp
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4j,10pt,twocolumn]{jarticle}
+\usepackage{ipsjz}           % 全国大会用パッケージ
+\usepackage[dvips]{graphics} % 図の取り込み用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% タイトル
+\title{情報処理学会全国大会論文サンプル} 
+\etitle{A Sample of a IPSJ proceeding}   
+
+%% 著者名
+\author{静大太郎\DAG \quad 静大二郎\DAG \quad 名大花子\DDAG}
+\eauthor{Taro SHIZUDAI\DAG, Jiro SHIZUDAI\DAG and Hanako MEIDAI\DDAG} 
+
+%% 所属
+\affiliation{\DAG 静岡大学情報学部 \quad\quad \DDAG 名古屋大学工学部}
+\eaffiliation{\DAG Faculty of Information, Shizuoka University\\
+432-8011, Hamamatsu, Japan\\
+\DDAG Dept. of Engineering, Nagoya University\\
+464-8603, Nagoya, Japan}
+
+%% メールアドレス
+\email{\{address1, address2, address3\}@cs.inf.shizuoka.ac.jp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle              % 日本語タイトル作成
+\makeetitle             % 英語タイトル作成
+%\baselineskip=1.53zh   %必要に応じて行間を調整
+
+\section{はじめに}
+
+このドキュメントは，アスキー版日本語 \LaTeXe\cite{texdoc}\cite{ascii}と
+情報処理学会全国大会論文のためのipsjz パッケージを使って論文を作成する
+ためのサンプルです。ipsj.sty は 1999 年秋の全国大会の書式に基づいて作成
+されていますが，今後，情報処理学会の規定する書式の変更によって，このパッ
+ケージは予告なく変更されます。
+
+\section{所属等の書き方}
+
+サンプルを見れば分かると思いますが，ipsjz パッケージには jarticle クラ
+スで提供されている \verb+\title+ や \verb+\author+ に加えて，
+\verb+\etitle+，\verb+\eauthor+，\verb+\affiliation+，
+\verb+\eaffiliation+，\verb+\email+ が追加されています。それぞれ，英文
+タイトル，英文著者名，和文所属，英文所属，メールアドレスを指定するコマ
+ンドです。これらの情報は \verb+\maketitle+ および \verb+\makeetitle+ コ
+マンドで出力されます。なお，\verb+\makeetitle+ コマンドは 
+\verb+\maketitle+ コマンドより後に使用してください。
+
+\section{図の取り込み}
+
+\subsection{図のデータ形式}
+
+図のデータは EPS で作成するのが良いでしょう。Tgif や Illustrator で作成
+するのが良いでしょう。Windows の印刷で EPS 出力して作成した EPS ファイ
+ルは，サイズ調整がうまくいかないことが多いと感じています。
+
+\subsection{図の取り込みの実例}
+
+図の取り込みには graphics パッケージによって提供される 
+\verb+\includegraphics+ コマンドを使用します。\textbf{図~\ref{fig-sample1}}
+では，図をそのままの大きさで取り込んでいます。
+
+\begin{figure}[tb]
+ \begin{center}
+  \includegraphics{fig1.eps}
+  \caption{図のサンプル（サイズ調整なし）}
+  \label{fig-sample1}
+\end{center}
+\end{figure}
+
+\textbf{図~\ref{fig-sample2}} では，図の横幅を \verb+\columnwidth+ に合
+わせています。サイズの調整には graphics パッケージで提供されている 
+\verb+\resizebox+ コマンドを使用しています。
+
+figure 環境での図の配置指定には [h] を使わないようにしてください。図に
+よって文章が分断され，文章が読みにくくなることがあるからです。位置指定
+には [tb] [t] [b] のいずれかを指定してください。
+
+\begin{figure}[tb]
+ \begin{center}
+  \resizebox{\columnwidth}{!}{\includegraphics{fig1.eps}}
+  \caption{図のサンプル（サイズ調整版）}
+  \label{fig-sample2}
+\end{center}
+\end{figure}
+
+
+\section{美しい組版をするために}
+
+美しい組版をするために以下のことに気をつけましょう。
+
+\begin{itemize}
+ \item \textbf{括弧を適切に使用する} 日本語文中では全角の（）を，英文中では半角
+       の () を使用するときれいに仕上がります。全角と半角の括弧では，括
+       弧の下の位置が異なります。
+ \item \textbf{英文と和文の間には半角のスペースをいれる}
+ \item \textbf{数式は数式モードで書く} \TeX の機能を十分に使わないばか
+       りか，フォントの違いによって数式の意味が分かりにくくなってしまい
+       ます。数式モード中でのフォントの使い方にも気をつけてください。
+ \item \textbf{全角スペースを使った位置調整は行わない} 折角の \TeX の高
+       度な組版機能が発揮できません。スペース調整は \TeX の機能をうまく
+       使って行うようにしましょう。参考文献に挙げた \cite{texdoc} など，
+       一冊は手元に \LaTeXe 関係の本を用意しておくと良いでしょう。（個
+       人的には \TeX ブック \cite{texbook} がお勧めだけど，玄人向けだな
+       あ）
+\end{itemize}
+
+\section{おまけの機能}
+
+ipsjz パッケージには論文を書きやすくするためのおまけ機能があります。
+\textbf{表~\ref{tbl-addon}} を参照してください。これらの機能は，作者の
+気分によって予告なく追加されます。
+
+\begin{table}[tb]
+ \begin{center}
+  \caption{おまけコマンド}
+  \label{tbl-addon}
+  \small
+  \begin{tabular}{lp{5cm}}
+   \Hline
+   \multicolumn{1}{c}{\textbf{コマンド}} & 
+   \multicolumn{1}{c}{\textbf{機能}} \\
+   \hline
+   \verb+\Hline+ & この表の一番上の罫線のように，太い罫線を描く。\\
+   \verb+\DAG+ & 上付のダガー（\DAG）。所属等の区分に使用。\\
+   \verb+\DDAG+ & 上付のダブルダガー（\DDAG）。所属等の区分に使用。\\
+   \verb+\slashbr{}+ & スラッシュ（/）でも改行できるようにする。URL を参
+   考文献に使用するときに重宝する。このドキュメントでも参考文献 
+   \cite{ishihara} のところで使用している。\\
+   \Hline
+  \end{tabular}
+ \end{center}
+\end{table}
+
+\section{まとめ}
+
+以上，ipsjz パッケージによる論文の書き方を簡単に紹介しました。このパッ
+ケージを使ってばりばり論文を書いてくださることを期待します。なお，私の
+ホームページでも簡単な \LaTeX の使い方の説明のページ \cite{ishihara} が
+あるので参考にしてください。
+
+\begin{thebibliography}{9}
+%\baselineskip=1.3zh       %必要に応じて行間を調整
+ \bibitem{texdoc} 中野: 日本語 \LaTeXe ブック, アスキー出版局, 1996
+ \bibitem{ascii} {http://www.ascii.co.jp/pb/ptex/index.html}
+ \bibitem{texbook} D.~E.~Knuth: 改定新版 \TeX ブック, アスキー出版局,
+         1992
+ \bibitem{ishihara}\slashbr{
+         http://apus.cs.inf.shizuoka.ac.jp/\~ishihara/LaTeX/index.html}
+\end{thebibliography}
+\end{document}
