@@ -50,7 +50,7 @@
 %--------------------------------------------------------------------%
 % タイトル
 %--------------------------------------------------------------------%
-\def\maketitle#1#2#3#4#5#6{
+\def\maketitle#1#2#3#4{
 	\twocolumn[
 		\vspace{-5mm}
 		\begin{center}
@@ -75,10 +75,7 @@
 			\ifnum\@type=4
 				{\small{\bf {\the\year} 年度 研究室合同中間発表会（{\@year}年{\@month}月{\@date}日）}}
 			\fi
-			\ifnum\@type=5
-				{\small{\bf {\the\year} 年度 （{\@year}年{\@month}月{\@date}日）}}
-			\fi
-			\hfill {\small{\bf Human Interface 特論}}
+			\hfill {\small{\bf ネットワーク情報システム研究室}}
 
 			\vspace{-3mm}
 
@@ -91,8 +88,8 @@
 
 			\LARGE{#1} \\ \vspace{2mm}
 			\Large{#2} \\ \vspace{4mm}
-			\large{#3 / #4}  \vspace{4mm}
-			\large{#5 / #6} \\ \vspace{0mm}
+			\large{#3 / #4} \\ \vspace{0mm}
+
 			% 横線
 			% \begin{picture}(525,3)
 			% 	\put(0,2){\line(1,0){515}}
