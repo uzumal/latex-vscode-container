@@ -43,17 +43,23 @@ Mobility Research Center, Doshisha University, Kyotanabe, Kyoto 610–0321, Japa
 近年，小型ドローンは機体が小さいことから，人間が入れないような狭小空間での利用が検討されている．
 しかし，狭小空間では遮蔽物が多いため，操縦者の死角領域内にてドローンを飛行させる必要がある．
 また小型ドローンは，搭載可能なセンサの制約条件が大きく，十分に周辺を監視することができないため，衝突する恐れのある障害物が多く存在する狭小空間では，安全なドローン操縦は困難である．
+そのため，衝突することのできない点検や，迅速な対応が求められる災害現場のような狭小空間では，安全で迅速なドローン操縦性を発揮できる必要がある．
 そこで，操縦者とドローンの間に遮蔽物が存在し，ドローンを視認できない狭小空間に対してARを利用することで，操縦を支援する方式を検討する．
-本稿では，3次元環境地図を事前に作成し，遮蔽物により視認できない空間，ドローンを可視化した上で，ARを用いたドローン近傍の障害物を知覚する方式を提案し，従来の操縦とARを用いた方式を比較し，評価した．
+本稿では，三次元環境地図を事前に作成し，遮蔽物により視認できない空間，ドローンを可視化した上で，ARを用いたドローン近傍の障害物を知覚する方式を提案し，従来の操縦とARを用いた方式を比較し，評価した．
 その結果，ARありの方式では一貫して平均操縦時間，平均衝突警告回数が減少し，操縦性の向上を示した．
 \end{abstract}
 
 \begin{jkeyword}
-AR，3次元環境認識，可視化
+AR，三次元環境認識，可視化
 \end{jkeyword}
 
 \begin{eabstract}
-In recent years, small drones have been expected to play an active role in narrow spaces where humans cannot enter due to the small size of the spaces. However, since there are many obstructions in a small space, it is necessary to fly the drone within the pilot's blind spot, which is difficult to control. In addition, small drones are limited in sensor installation, and it is difficult to avoid obstacles using sensors, making safe drone operation difficult in confined spaces with many obstacles that may cause collisions. Therefore, AR is used for the environments where the drone cannot be seen due to the presence of obstructions between the operator and the drone. In this paper, we propose a method of perceiving obstacles in the vicinity of a drone using AR on the basis of creating a three-dimensional map of the environment in advance and visualizing the space and drone that cannot be seen due to obstructions. As a result, the average maneuvering time and the average number of collision warnings were consistently reduced in the method with AR, indicating an improvement in maneuverability.
+In recent years, small drones have been examined to play an active role in narrow spaces where humans cannot enter due to the small size of the spaces. 
+However, it is difficult to control the drone within the pilot’s blind spot, since there are many obstructions in a small space. 
+In addition, small drones are limited in sensor installation, and it is difficult to autonomously avoid obstacles using sensors, making safe drone operation difficult in confined spaces with many obstacles that may cause collisions. 
+Therefore, it is necessary to be able to demonstrate safe and quick drone maneuverability in confined spaces, at inspection sites where collisions are not possible, and at disaster sites where quick response is required.
+Augmented Reality can address these issues for the environments where the drone cannot be seen due to the presence of obstructions between the operator and the drone. 
+In this paper, we propose a method of perceiving obstacles in the vicinity of a drone using AR by means of creating a three-dimensional map of the environment in advance and visualizing the space and drone that cannot be seen due to obstructions. As a result, the average maneuvering time and the average number of collision warnings were consistently reduced in the method with AR, indicating an improvement in maneuverability.
 \end{eabstract}
 
 \begin{ekeyword}
@@ -71,7 +77,7 @@ augmented reality, 3D environment recognition, visualization
 中でも小型ドローンの特徴である機体の大きさを活かして，人間が入れないような狭い空間での活躍の場も増加している\cite{article-drone04}\cite{article-drone05}．
 しかし，狭小空間でのドローン飛行は，遮蔽物が多く，操縦者は遮られた視点からの操縦を必要とする\cite{article-drone03}．そのため，死角領域内のドローン操縦では，ドローンを視認できない中，衝突することなく，安全に操縦する技術が求められる．
 \par
-ドローンの操縦に関する技術の提案は複数あるが\cite{article-drone07}\cite{article-ar01}\cite{book-drone05}，ドローンを操縦する際の視点の呼び方について統一した定義がないため，本論文ではドローン操縦視点を次のように定義し，各操縦視点の概要を図　に示す．
+ドローンの操縦に関する技術の提案は複数あるが\cite{article-drone07}\cite{article-ar01}\cite{book-drone05}，ドローンを操縦する際の視点の呼び方について統一した定義がないため，本論文ではドローン操縦視点を次のように定義し，各操縦視点の概要を図\ref{fig:02_relation}に示す．
 \begin{itemize}
   \item 一人称視点\mbox{}：ドローンを操縦する操縦者の視点．操縦者の視点から視認できる範囲のみを頼りに操縦を行う．
   \item 二人称視点\mbox{}：ドローンに搭載されたオンボードカメラの視点．操縦者はドローンから送られる空撮した映像を基に，ドローン中心の視点での操縦を行う．
@@ -121,20 +127,7 @@ Kamedaらの研究\cite{book-ar03}では，監視カメラが埋め込まれた�
 このように，ドローンや死角領域に対してARを用いた前例があり，狭小空間による死角領域内のドローン飛行においても適合すると推測する．
 また，ARを用いて現実空間に仮想情報を重畳表示することが，効果的であったことを考慮すると，操縦者の見ている現実環境に作用する余地がある二人称視点でのドローン操縦が適していると推測する．
 
-%2.2
-\subsection{狭小空間におけるドローン操縦手法}
-
-Liuらの研究\cite{book-ar04}では，ドローン周辺の環境を再構築し，操縦者前方の床やテーブル上に3Dマップを表示することにより，自律航行中のドローンとの直感的なインタラクション手法を提案している．
-結果として，操縦者はドローン周辺の3次元環境に没入することができ，飛行空間の探索に成功することができた．
-しかし，自律飛行することのできない狭小空間では，操縦者の意図を伝えて飛行させることができない．また，デスクトップPCインタフェースと比較評価した結果，ARインタフェースは操作精度を犠牲にしていた．そのため，タスク完了までに時間がかかる問題を抱えており，ドローン操縦性を低減してしまう．
-
-Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内の，一人称視点でのドローン操縦手法を提案している．図\ref{fig:02_relation}が示すように，事前に空間マッピングにて用意した3次元環境を用いて，閉鎖環境をAR可視化している．
-結果として，ドローン視点での二人称視点操縦と比べ，一人称視点でのドローン操縦手法では，タスク完了までの操縦時間が半分以下となった．
-
-しかし，ドローン飛行の際に，障害物に衝突しない環境を想定しており，狭小空間での障害物による危険性が提示されていない．また，二人称視点操縦では，ジョイパッドを用いて操縦していた一方で，一人称視点での操縦では，ハンドジェスチャで操縦していた．そのため，タスク完了までの操縦時間への有意差が，ARによる空間認識の提供により引き起こされたか不明である．そのため，ARにより狭小空間でのドローン操縦性向上が示せるかを確認するため，衝突の危険性を提示し，また，ドローン操縦手法を統一する必要がある．
-
 % --------------------------- Figure  ---------------------------
-
 \begin{figure}[tb]
   \centering
   \includegraphics[width=\linewidth]{img/03_enviroment.eps}
@@ -158,6 +151,21 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
   \ecaption{Outline of Proposed Method．}
   \label{fig:03_outline}
   \end{figure}
+% -----------------------------------------------------------------
+
+%2.2
+\subsection{狭小空間におけるドローン操縦手法}
+
+Liuらの研究\cite{book-ar04}では，ドローン周辺の環境を再構築し，操縦者前方の床やテーブル上に3Dマップを表示することにより，自律航行中のドローンとの直感的なインタラクション手法を提案している．
+結果として，操縦者はドローン周辺の三次元環境に没入することができ，飛行空間の探索に成功することができた．
+しかし，自律飛行することのできない狭小空間では，操縦者の意図を伝えて飛行させることができない．また，デスクトップPCインタフェースと比較評価した結果，ARインタフェースは操作精度を犠牲にしていた．そのため，タスク完了までに時間がかかる問題を抱えており，ドローン操縦性を低減してしまう．
+
+Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内の，一人称視点でのドローン操縦手法を提案している．図\ref{fig:02_relation}が示すように，事前に空間マッピングにて用意した三次元環境を用いて，閉鎖環境をAR可視化している．
+結果として，ドローン視点での二人称視点操縦と比べ，一人称視点でのドローン操縦手法では，タスク完了までの操縦時間が半分以下となった．
+
+しかし，ドローン飛行の際に，障害物に衝突しない環境を想定しており，狭小空間での障害物による危険性が提示されていない．また，二人称視点操縦では，ジョイパッドを用いて操縦していた一方で，一人称視点での操縦では，ハンドジェスチャで操縦していた．そのため，タスク完了までの操縦時間への有意差が，ARによる空間認識の提供により引き起こされたか不明である．そのため，ARにより狭小空間でのドローン操縦性向上が示せるかを確認するため，衝突の危険性を提示し，また，ドローン操縦手法を統一する必要がある．
+
+% --------------------------- Figure  ---------------------------
   
   \begin{figure*}[!tb]
     \centering
@@ -166,8 +174,8 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
     \ecaption{Overview of Each Method and the Pilot's Perspective．}
     \label{fig:03_preview}
   \end{figure*}
-  
-  % -----------------------------------------------------------------
+
+% -----------------------------------------------------------------
 
 
 %==========================================================================================
@@ -187,7 +195,7 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 
 \subsection{可視化方式}
 可視化方式では，ドローンと操縦者の間に遮蔽物が存在すると判断した際，ドローンが飛行している場所を操縦者にとっての死角領域としている．
-死角領域が存在すると判断したとき，事前に空間マッピングした3次元環境地図における遮蔽物を透過した上で，現実環境に重畳表示することで，仮想的に死角領域の空間認識を提供する．操縦者は，死角領域内を飛行するドローンを視認することはできないが，ARによって仮想のドローンと，ドローン周辺の3次元環境を視認することができる．
+死角領域が存在すると判断したとき，事前に空間マッピングした三次元環境地図における遮蔽物を透過した上で，現実環境に重畳表示することで，仮想的に死角領域の空間認識を提供する．操縦者は，死角領域内を飛行するドローンを視認することはできないが，ARによって仮想のドローンと，ドローン周辺の三次元環境を視認することができる．
 \par
 図\ref{fig:03_preview}左のように，遮蔽物によって視認できないドローンと，そのドローン周辺の環境をARによって可視化している．障害物を知覚せず，可視化による空間認識の視覚支援のみを行なっている．
 
@@ -202,9 +210,9 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 \begin{enumerate}
 	\item ドローンからの距離が閾値a 未満の障害物を赤色に変更
     
-    \item ドローンからの距離が閾値a 以上 〜 閾値b 未満の障害物を赤色から黄色に変更
+  \item ドローンからの距離が閾値a 以上 〜 閾値b 未満の障害物を赤色から黄色に変更
     
-    \item ドローンからの距離が閾値b 以上の障害物を緑色に変更
+  \item ドローンからの距離が閾値b 以上の障害物を緑色に変更
 \end{enumerate}
 
 図\ref{fig:03_preview}中央のように，ドローン本体ではなく，ドローン周辺の環境を拡張しており，ドローン周辺の障害物の危険度を理解できる，色彩の変化による視覚支援を行なっている．赤色に変化した障害物の方向には衝突の危険性，黄色になっている障害物の方向には慎重な操縦の必要性，一方で緑色の障害物の方向には進んでも衝突の危険性がないことを示し，操縦者への安心感を提供する障害物知覚を行っている．
@@ -225,6 +233,18 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 
 図\ref{fig:03_preview}右のように，ドローン自体を拡張しており，どの障害物が危険か一目で理解できる，直感的視覚支援を行なっている．赤色の目印が向けられている障害物はこれ以上進むと衝突の危険性があり，黄色の目印が向けられている障害物は慎重な操縦を求め，操縦者への危機感を与える視覚的支援を行なっている．
 
+% --------------------------- Figure  ---------------------------
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\linewidth]{img/04_system.eps}
+  \caption{システム構成}
+  \ecaption{System Configuration．}
+  \label{fig:04_system}
+\end{figure}
+  
+% -----------------------------------------------------------------
+
 %==========================================================================================
 %========================================= Section ========================================
 %==========================================================================================
@@ -235,25 +255,23 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 実際に使用したドローンはRyze Tech社製Tello EDU（以下，Tello）であり，操作端末はMacBookProを用いる．Telloはプログラミングによってフライトコントロールを行うことができ，規定のコマンドを送信することで飛行制御することができる．
 \par
 ARHMDはMicrosoft HoloLens2（以下，HoloLens）を使用する．
-事前に，HoloLensのSpatial Mappingにより空間マッピングを行うことで空間のメッシュデータを入手し，静的な3次元環境地図を作成する．
-作成した3次元環境地図を，ゲーム・アニメーションエンジンであるUnity内の3D仮想空間上に配置し，操縦者の位置情報と，Unity内の3次元環境地図の位置合わせを行うことで，空間認識を提供する．
+事前に，HoloLensのSpatial Mappingにより空間マッピングを行うことで空間のメッシュデータを入手し，静的な三次元環境地図を作成する．
+作成した三次元環境地図を，ゲーム・アニメーションエンジンであるUnity内の3D仮想空間上に配置し，操縦者の位置情報と，Unity内の三次元環境地図の位置合わせを行うことで，空間認識を提供する．
 \par
 サーバではTello，HoloLensとUDP通信\cite{web-udp}を行なっており，常時，Telloの傾きや移動距離をHoloLensに送信する．
 Telloより受け取った値をUnity 座標系へ変換し，変換後の値を反映させることにより，仮想ドローンの位置合わせを行っている．
 ここでUDPを使用する理由として，Tello，サーバ，HoloLens間の遅延低減を目的とする．
 \par
-距離画像方式，マーカー方式では，共に障害物までの距離によって，危険度を色で示している．操縦者がドローンを操縦するとき，衝突する危険性がある距離を0.3mとし\cite{tech-01}，距離画像方式では，障害物までの距離が0.3mまでを赤色，0.3m〜0.6mまでを黄色，0.6m以上を緑色で示す．マーカー方式では障害物までの距離が0.3mまでを赤色の目印，0.3m〜0.6mの際に黄色の目印を示す．
+距離画像方式，マーカー方式では，共に障害物までの距離によって，危険度を色で示している．操縦者がドローンを操縦するとき，衝突する危険性がある距離を0.3m とし\cite{tech-01}，距離画像方式では，障害物までの距離が0.3m までを赤色，0.3m 〜 0.6m までを黄色，0.6m 以上を緑色で示す．マーカー方式では障害物までの距離が0.3m までを赤色の目印，0.3m 〜 0.6m の際に黄色の目印を示す．
 
 % --------------------------- Figure  ---------------------------
-
 \begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{img/04_system.eps}
-\caption{システム構成}
-\ecaption{System Configuration．}
-\label{fig:04_system}
+  \centering
+  \includegraphics[width=\linewidth]{img/04_experiment.eps}
+  \caption{実験環境}
+  \ecaption{Experimental Environment．}
+  \label{fig:04_experiment}
 \end{figure}
-
 % -----------------------------------------------------------------
 
 \subsection{タスク}
@@ -262,29 +280,6 @@ Telloより受け取った値をUnity 座標系へ変換し，変換後の値を
 
 \subsection{評価実験}
 死角領域内を飛行するドローンの操縦において，各方式がどのような影響を与えるかを評価するため，10人の実験協力者による実験を行なった．参加者の平均年齢は22歳であり，ドローン操縦経験はなかった．実験は約60分で行い，導入，各提案方式の練習，ARのキャリブレーション，タスク，アンケートの5つのフェーズから構成する．まず，参加者は本研究の概要と，操縦方法の説明を受け，その後，各方式の練習を行う．予備実験で，操縦の慣れによる実験後半の操縦時間短縮や，ARの経験がないことによる操縦時間増加を引き起こすことがわかった．そのため，この効果を打ち消すために，ドローン操縦を5〜10分ほど練習した後に，各方式で実験環境を1度走行することで，練習量を増やし，慣れによる差異を無くした．次にAR方式では，HoloLensアプリケーションを起動し，現実空間とのキャリブレーションを行い，参加者はHoloLensを装着した．その後，タスクを行い，各方式でタスクを完了する度に，実験を行なった方式についてアンケートを記入し，全方式を終了したら，どの方式が最も効果的であったかを選択し，その理由を記入してもらった．また，なぜ他の方式を選択しなかったのか，その理由も記入してもらった．
-
-% --------------------------- Figure  ---------------------------
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{img/04_experiment.eps}
-\caption{実験環境}
-\ecaption{Experimental Environment．}
-\label{fig:04_experiment}
-\end{figure}
-
-
-% -----------------------------------------------------------------
-
-\subsection{評価項目}
-提案方式の有効性を評価するにあたり，ドローン技術の熟練度による差を出さないために，Telloの速度，一度に進む距離，旋回角度は事前に設定している．またサーバのスペック，サーバよりTelloへ送信するコマンドのパラメータの設定を表\ref{tab:server_spec}，表\ref{tab:command_parameter}に示す．
-本研究では，各方式における，操縦者がタスクを完了するまでの操縦時間，障害物への衝突警告回数の2項目による客観的な評価と，参加者へのアンケート，自由回答による主観的な評価を記録した．
-障害物の衝突警告回数では，実際に衝突してしまう恐れがあるため，操縦者がドローンを進行させようとしている方向に存在する障害物との距離を計測し，距離が0.3 m以内の際に操縦者へ警告がされるようになっている．
-表\ref{tab:command_parameter}に示すように，ドローンの進行距離を0.3 mとしているため，衝突警告距離の閾値を0.3 mとした．
-また参加者へのアンケートでは，主観的な認識と好みを測定するために，7ポイントのリッカート尺度のアンケートを実施した．
-アンケートでは二人称視点方式とARを利用した3つの各方式を比較できるように実施し，また，AR同士での比較が行えるように，ARを用いた方式のみ別途アンケートを実施した．
-二人称視点方式とARを用いた3つの各方式を比較するアンケートでは，操縦の安心度，危険な障害物を判断できたかの2項目を設けた．
-また，ARを用いた方式のみを比較するアンケートでは，状況把握の容易さ，操縦の自信度の2項目を設けた．
-実験の最後には，参加者にはどの方式が最も操縦性が良かったかを選択し，なぜその方式が良かったのか，また，なぜ他の方式を選択しなかったかという項目を設けた．タスク完了までの平均操縦時間には一次元配置分散分析（one-way analysis of variance：以下，ANOVA）を用いて統計解析した．また，Post-hoc検定では，Tukey’s Honestly Significant Difference（Tukey HSD）検定を行い，各方式の比較を行なった．平均衝突警告回数，アンケート結果では，Friedman検定を行い，Post-hoc検定ではBonferroni法を行い，各方式の比較を行なった．
 
 % --------------------------- Figure  ---------------------------
 
@@ -322,6 +317,21 @@ Telloより受け取った値をUnity 座標系へ変換し，変換後の値を
 \end{table}
 
 
+% -----------------------------------------------------------------
+
+\subsection{評価項目}
+提案方式の有効性を評価するにあたり，ドローン技術の熟練度による差を出さないために，Telloの速度，一度に進む距離，旋回角度は事前に設定している．またサーバのスペック，サーバよりTelloへ送信するコマンドのパラメータの設定を表\ref{tab:server_spec}，表\ref{tab:command_parameter}に示す．
+本研究では，各方式における，操縦者がタスクを完了するまでの操縦時間，障害物への衝突警告回数の2項目による客観的な評価と，参加者へのアンケート，自由回答による主観的な評価を記録した．
+障害物の衝突警告回数では，実際に衝突してしまう恐れがあるため，操縦者がドローンを進行させようとしている方向に存在する障害物との距離を計測し，距離が0.3 m以内の際に操縦者へ警告がされるようになっている．
+表\ref{tab:command_parameter}に示すように，ドローンの進行距離を0.3 mとしているため，衝突警告距離の閾値を0.3 mとした．
+また参加者へのアンケートでは，主観的な認識と好みを測定するために，7ポイントのリッカート尺度のアンケートを実施した．
+アンケートでは二人称視点方式とARを利用した3つの各方式を比較できるように実施し，また，AR同士での比較が行えるように，ARを用いた方式のみ別途アンケートを実施した．
+二人称視点方式とARを用いた3つの各方式を比較するアンケートでは，操縦の安心度，危険な障害物を判断できたかの2項目を設けた．
+また，ARを用いた方式のみを比較するアンケートでは，状況把握の容易さ，操縦の自信度の2項目を設けた．
+実験の最後には，参加者にはどの方式が最も操縦性が良かったかを選択し，なぜその方式が良かったのか，また，なぜ他の方式を選択しなかったかという項目を設けた．タスク完了までの平均操縦時間には一次元配置分散分析（one-way analysis of variance：以下，ANOVA）を用いて統計解析した．また，Post-hoc検定では，Tukey’s Honestly Significant Difference（Tukey HSD）検定を行い，各方式の比較を行なった．平均衝突警告回数，アンケート結果では，Friedman検定を行い，Post-hoc検定ではBonferroni法を行い，各方式の比較を行なった．
+
+% --------------------------- Figure  ---------------------------
+
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{img/04_bar1.eps}
@@ -334,7 +344,7 @@ Telloより受け取った値をUnity 座標系へ変換し，変換後の値を
 \centering
 \includegraphics[width=\linewidth]{img/04_bar2.eps}
 \caption{平均衝突警告回数}
-\ecaption{Average Number of Conflict Warning Returns．}
+\ecaption{Average Number of Collision Warnings．}
 \label{fig:04_bar2}
 \end{figure}
 
