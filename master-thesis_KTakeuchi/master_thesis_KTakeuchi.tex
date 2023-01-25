@@ -329,7 +329,7 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 % 提案方式の遮蔽物を透過した画像を添付
 \begin{figure}[!tb]
   \centering
-  \includegraphics[width=\linewidth]{img/03_outline.pdf}
+  \includegraphics[width=0.9\linewidth]{img/03_outline.pdf}
   \caption{提案方式の概要}
   \label{fig:03_outline}
 \end{figure}
@@ -361,7 +361,7 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 % 各ローカル座標を管理している図を表現
 \begin{figure}[bt]
   \centering
-  \includegraphics[width=0.9\linewidth]{img/03_cordinate.pdf}
+  \includegraphics[width=0.8\linewidth]{img/03_cordinate.pdf}
   \caption{ワールド座標での一元管理}
   \label{fig:03_cordinate}
 \end{figure}
@@ -380,6 +380,15 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 正しく三次元環境地図が復元されないことが推測される．
 
 そこで，\figref{fig:03_cordinate}に示すように，各ドローンをワールド座標系で管理し，各ドローンの持つ中心座標をもとにしたドローンの位置情報，点群データをローカル座標系として保持・統合し，操縦者へ提供する仮想的な三次元環境地図，ドローンを生成する．
+ワールド座標系への座標変換には以下の式(\ref{world})を用いる．
+
+\begin{equation}
+  \label{world}
+  \begin{pmatrix} X_w & Y_w & Z_w & 1 \end{pmatrix} = \begin{pmatrix} X_n & Y_n & Z_n & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ T_x & T_y & T_z & 1 \end{pmatrix}
+\end{equation}
+
+ここで，$X_{w}$，$Y_{w}$，$Z_{w}$は変換後のワールド座標，$X_{n}$，$Y_{n}$，$Z_{n}$はローカル座標系に位置する物体の座標，${n}$は各ローカル座標系に位置する物体の総数である．
+また，$T_{x}$，$T_{y}$，$T_{z}$は平行移動のパラメータであり，移動量を示している．
 これにより，\figref{fig:03_propose}に示すように，各ドローンが取得するデータの座標系が異なることによる位置情報のずれを解消し，実際の現実環境に合わせた位置合わせを実現している．
 
 また，点群データとは膨大な数の点の集合であり，データ量が非常に大きいため，データの送受信にオーバーヘッドがあり，また，点群データを扱う際のARHMDにかかる計算負荷も大きくなり，操縦者へ視覚支援を提供する際のフレームレートが大幅に減少することが想定される．
@@ -403,7 +412,7 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 
 \begin{figure}[!tb]
   \centering
-  \includegraphics[width=\linewidth]{img/03_propose.pdf}
+  \includegraphics[width=0.8\linewidth]{img/03_propose.pdf}
   \caption{提案方式の操縦者目線}
   \label{fig:03_propose}
 \end{figure}
@@ -444,13 +453,13 @@ Eratらの研究\cite{article-ar05}では，狭小空間による死角領域内
 % 上の図と比較してわかるように表現
 \begin{figure}[!tb]
   \centering
-  \includegraphics[width=0.9\linewidth]{img/03_danger1.pdf}
+  \includegraphics[width=0.8\linewidth]{img/03_danger1.pdf}
   \caption{三人称視点での遮蔽物知覚}
   \label{fig:03_dangerLevel1}
 \end{figure}
 \begin{figure}[!tb]
   \centering
-  \includegraphics[width=0.9\linewidth]{img/03_danger2.pdf}
+  \includegraphics[width=0.8\linewidth]{img/03_danger2.pdf}
   \caption{操縦者目線での遮蔽物知覚}
   \label{fig:03_dangerLevel2}
 \end{figure}
@@ -484,7 +493,7 @@ ORB-SLAM2では，他のvSLAMとは異なり，カメラ映像中の特徴点を
 \end{equation}
 
 $x_{c}$はカメラ映像内の特徴点の三次元座標，$H_{cr}$はカメラ行列（ホモグラフィ行列），$x_{r}$はカメラ映像内のカメラ座標系上での観察座標，$F_{cr}$は基礎行列となっている．
-2種類の数式を並列で計算した上で，適切な方を自動で選択するため，高速かつ汎用的な特徴点対応を行うことができている．
+二種類の数式を並列で計算した上で，適切な方を自動で選択するため，高速かつ汎用的な特徴点対応を行うことができている．
 
 取得した点群はPCL（Point Cloud Library）\cite{book-pcl}による処理を通した上で，サーバに送信している．
 サーバではTello，ARHMDとSocket通信を行なっており，常時，Telloの傾きや移動距離をARHMDに送信する．
